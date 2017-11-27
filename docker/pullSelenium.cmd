@@ -1,0 +1,1 @@
+call docker pull elgalu/selenium

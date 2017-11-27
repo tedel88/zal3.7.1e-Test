@@ -1,0 +1,14 @@
+{
+    "name": "test-protractor",
+    "version": "1.1.0",
+    "main": "compiled/conf.js",
+    "author": "tedel88",
+    "license": "ISC",
+    "scripts": {
+      "protractor": "protractor compiled/conf.js",
+      "test": "protractor conf.js"
+    },  
+    "dependencies": {
+      "protractor": "^5.2.0"
+    }
+  }

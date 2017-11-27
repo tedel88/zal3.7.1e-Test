@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  zalenium:
+    image: "dosel/zalenium:3.7.1e"
+    container_name: zalenium
+    hostname: zalenium
+    tty: true
+    volumes:
+      - /tmp/videos:/home/seluser/videos
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - 4444:4444
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300m"
+        max-file: "3"
+    command: >
+      start --desiredContainers 1
+            --maxTestSessions 1
+            --maxDockerSeleniumContainers 10
+            --screenWidth 1920 --screenHeight 1000
+            --timeZone "Europe/Berlin"
+            --videoRecordingEnabled true
+            --sauceLabsEnabled false
+            --browserStackEnabled false
+            --testingBotEnabled false
+            --keepOnlyFailedTests true
+            --startTunnel false
+    environment:
+      - HOST_UID
+      - HOST_GID
+      - NO_PROXY=.local,locahost,127.0.0.1,172.16.0.0/12,192.168.0.0/16
+    networks:
+      - zalenium_grid_internal
+
+
+networks:
+    zalenium_grid_internal:
+        driver: bridge
+        ipam:
+          driver: default
+          config:
+          - subnet: 10.20.0.0/16
